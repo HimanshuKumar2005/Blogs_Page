@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
+import { MONGODB_CONNECTION_STRING } from "../config/index.js";
 
-const connectionString = "mongodb+srv://himanshukumar06764:password@cluster0.sgwrb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+const connectionString = MONGODB_CONNECTION_STRING
 
 //function to connect
 const dbConnect = async () => {
