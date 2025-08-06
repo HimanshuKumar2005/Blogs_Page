@@ -10,8 +10,8 @@ const errorHandler = (error, req, res, next)=>{
     }
 
     if (error instanceof ValidationError){
-        status = error.status
-        data.message = error.message
+        status = 400  // here Validation Error has undefined status so make sure to define here..
+        data.message = error.message || "internal server error"
 
         return res.status(status).json(data)
     }
