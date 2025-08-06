@@ -2,6 +2,7 @@
 import express from "express"
 import  {authController} from "../controller/authController.js"
 import { auth } from "../middlewares/auth.js";
+import blogController from "../controller/blogController.js";
 //import blogController from "../controller/blogController.js"
 //import commentController from "../controller/commentController.js"
 
@@ -18,16 +19,25 @@ router.post('/login', authController.login);
 //logout
 router.post('/logout',auth, authController.logout)
 //refresh
-router.post('/refresh', authController.refresh)
+router.get('/refresh', authController.refresh)
 
 
 
 //blog operations
 //create
+router.post('/blog', auth, blogController.create);
+
 //get all
+router.get('/blog/all', auth, blogController.getAll);
+
 //get blog by id
+router.get('/blog/:id', auth, blogController.getById);
+
 //update
+router.put('/blog', auth, blogController.update);
+
 //delete
+router.delete('/blog/:id', auth, blogController.delete);
 
 
 //comment
