@@ -1,6 +1,6 @@
-const Joi = require('joi');
-const Comment = require('../models/comment');
-const CommentDTO = require('../dto/comment');
+import Joi from 'joi'
+import Comment from '../models/comment.model.js'
+import CommentDTO from '../dto/commet.js'
 
 const mongodbIdPattern = /^[0-9a-fA-F]{24}$/;
 
@@ -66,4 +66,4 @@ const commentController = {
     }
 }
 
-module.exports = commentController;
+export default commentController;

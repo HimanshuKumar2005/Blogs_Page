@@ -3,9 +3,7 @@ import express from "express"
 import  {authController} from "../controller/authController.js"
 import { auth } from "../middlewares/auth.js";
 import blogController from "../controller/blogController.js";
-//import blogController from "../controller/blogController.js"
-//import commentController from "../controller/commentController.js"
-
+import commentController from "../controller/commentController.js"
 
 const router = express.Router();
 
@@ -42,7 +40,8 @@ router.delete('/blog/:id', auth, blogController.delete);
 
 //comment
 //create
-
+router.post('/comment', auth, commentController.create);
 //get
+router.get('/comment/:id', auth, commentController.getById)
 
 export default router

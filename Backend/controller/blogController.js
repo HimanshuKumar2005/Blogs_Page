@@ -222,4 +222,4 @@ const blogController = {
   },
 };
 
-module.exports = blogController;
+export default blogController;
