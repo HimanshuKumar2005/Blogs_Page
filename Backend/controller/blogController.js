@@ -1,17 +1,18 @@
 import Joi from 'joi'
 import fs from 'fs'
-import Blog from '../models/blog.model'
-const {
+import Blog from '../models/blog.model.js'
+import {
   BACKEND_SERVER_PATH,
   CLOUD_NAME,
   API_SECRET,
   API_KEY,
-} = require("../config/index");
-const BlogDTO = require("../dto/blog");
-const BlogDetailsDTO = require("../dto/blog-details");
-const Comment = require("../models/comment");
+} from "../config/index.js"
+import BlogDTO from "../dto/blog.js"
+import BlogDetailsDTO  from "../dto/blogDetail.js"
+import Comment from "../models/comment.model.js"
 
-const cloudinary = require("cloudinary").v2;
+import { v2 as cloudinary } from "cloudinary";
+
 
 // Configuration
 cloudinary.config({

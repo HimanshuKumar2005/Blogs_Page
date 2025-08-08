@@ -4,11 +4,18 @@ import { PORT } from "./config/index.js";
 import router from "./router/index.js"
 import errorHandler from "./middlewares/errorHandler.js";
 import cookieParser from "cookie-parser";
+import cors from 'cors'
+
+const corsOptions = {
+    credentials : true,
+    origin : ["http://localhost:3000"],
+};
 const app = express()
 
 
 //middle wares
 app.use(cookieParser());
+app.use(cors(corsOptions));
 app.use(express.json()) // this will enable the server to send and receive the data in json..
 app.use(router)
 
