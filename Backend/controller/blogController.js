@@ -73,7 +73,7 @@ const blogController = {
         title,
         author,
         content,
-        photoPath: response.url,
+        photo: response.url,
       });
 
       await newBlog.save();
@@ -157,27 +157,10 @@ const blogController = {
     }
 
     if (photo) {
-      let previousPhoto = blog.photoPath;
-
-      previousPhoto = previousPhoto.split("/").at(-1);
-
-      // delete photo
-      fs.unlinkSync(`storage/${previousPhoto}`);
-
-      // read as buffer
-      // const buffer = Buffer.from(
-      //   photo.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""),
-      //   "base64"
-      // );
-
-      // allot a random name
-      // const imagePath = `${Date.now()}-${author}.png`;
-
-      // save locally
+      // Upload new photo to Cloudinary
       let response;
       try {
         response = await cloudinary.uploader.upload(photo);
-        // fs.writeFileSync(`storage/${imagePath}`, buffer);
       } catch (error) {
         return next(error);
       }
@@ -187,7 +170,7 @@ const blogController = {
         {
           title,
           content,
-          photoPath: response.url,
+          photo: response.url,
         }
       );
     } else {

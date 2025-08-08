@@ -4,7 +4,7 @@ class BlogDTO{
         this.author = blog.author;
         this.content = blog.content;
         this.title = blog.title;
-        this.photo = blog.photoPath;
+        this.photo = blog.photo;
     }
 }
 

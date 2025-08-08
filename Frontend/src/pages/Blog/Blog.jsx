@@ -11,10 +11,18 @@ function Blog() {
 
   useEffect(() => {
     (async function getAllBlogsApiCall() {
-      const response = await getAllBlogs();
+      try {
+        const response = await getAllBlogs();
 
-      if (response.status === 200) {
-        setBlogs(response.data.blogs);
+        if (response && response.status === 200) {
+          setBlogs(response.data.blogs);
+        } else {
+          console.error("Failed to fetch blogs:", response);
+          setBlogs([]);
+        }
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+        setBlogs([]);
       }
     })();
 

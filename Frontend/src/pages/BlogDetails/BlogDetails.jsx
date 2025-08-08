@@ -29,41 +29,61 @@ function BlogDetails() {
 
   useEffect(() => {
     async function getBlogDetails() {
-      const commentResponse = await getCommentsById(blogId);
-      if (commentResponse.status === 200) {
-        setComments(commentResponse.data.data);
-      }
+      try {
+        const commentResponse = await getCommentsById(blogId);
+        if (commentResponse && commentResponse.status === 200) {
+          setComments(commentResponse.data.data);
+        }
 
-      const blogResponse = await getBlogById(blogId);
-      if (blogResponse.status === 200) {
-        // set ownership
-        setOwnsBlog(username === blogResponse.data.blog.authorUsername);
-        setBlog(blogResponse.data.blog);
+        const blogResponse = await getBlogById(blogId);
+        if (blogResponse && blogResponse.status === 200) {
+          // set ownership
+          setOwnsBlog(username === blogResponse.data.blog.authorUsername);
+          setBlog(blogResponse.data.blog);
+        }
+      } catch (error) {
+        console.error("Error fetching blog details:", error);
       }
     }
     getBlogDetails();
   }, [reload]);
 
   const postCommentHandler = async () => {
-    const data = {
-      author: userId,
-      blog: blogId,
-      content: newComment,
-    };
+    try {
+      const data = {
+        author: userId,
+        blog: blogId,
+        content: newComment,
+      };
 
-    const response = await postComment(data);
+      const response = await postComment(data);
 
-    if (response.status === 201) {
-      setNewComment("");
-      setReload(!reload);
+      if (response && response.status === 201) {
+        setNewComment("");
+        setReload(!reload);
+      } else {
+        console.error("Failed to post comment:", response);
+        alert("Failed to post comment. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error posting comment:", error);
+      alert("Error posting comment. Please try again.");
     }
   };
 
   const deleteBlogHandler = async () => {
-    const response = await deleteBlog(blogId);
+    try {
+      const response = await deleteBlog(blogId);
 
-    if (response.status === 200) {
-      navigate("/");
+      if (response && response.status === 200) {
+        navigate("/");
+      } else {
+        console.error("Failed to delete blog:", response);
+        alert("Failed to delete blog. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error deleting blog:", error);
+      alert("Error deleting blog. Please try again.");
     }
   };
 

@@ -27,40 +27,54 @@ function UpdateBlog() {
   const author = useSelector((state) => state.user._id);
 
   const updateHandler = async () => {
-    // http:backend_server:port/storage/filename.png
-    // base64
-    let data;
-    if (photo.includes("http")) {
-      data = {
-        author,
-        title,
-        content,
-        blogId,
-      };
-    } else {
-      data = {
-        author,
-        title,
-        content,
-        photo,
-        blogId,
-      };
-    }
+    try {
+      // http:backend_server:port/storage/filename.png
+      // base64
+      let data;
+      if (photo.includes("http")) {
+        data = {
+          author,
+          title,
+          content,
+          blogId,
+        };
+      } else {
+        data = {
+          author,
+          title,
+          content,
+          photo,
+          blogId,
+        };
+      }
 
-    const response = await updateBlog(data);
+      const response = await updateBlog(data);
 
-    if (response.status === 200) {
-      navigate("/");
+      if (response && response.status === 200) {
+        navigate("/");
+      } else {
+        console.error("Failed to update blog:", response);
+        alert("Failed to update blog. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error updating blog:", error);
+      alert("Error updating blog. Please try again.");
     }
   };
 
   useEffect(() => {
     async function getBlogDetails() {
-      const response = await getBlogById(blogId);
-      if (response.status === 200) {
-        setTitle(response.data.blog.title);
-        setContent(response.data.blog.content);
-        setPhoto(response.data.blog.photo);
+      try {
+        const response = await getBlogById(blogId);
+        if (response && response.status === 200) {
+          setTitle(response.data.blog.title);
+          setContent(response.data.blog.content);
+          setPhoto(response.data.blog.photo);
+        } else {
+          console.error("Failed to fetch blog details:", response);
+        }
+      } catch (error) {
+        console.error("Error fetching blog details:", error);
       }
     }
     getBlogDetails();

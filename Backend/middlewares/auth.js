@@ -1,11 +1,12 @@
 import JWTService from "../services/JWTService.js";
+import User from "../models/user.model.js";
 
 // this middle ware will check user is authencicated or not to process the request..
 const auth = async (req, res, next) =>{
     // 1. refresh , access token validation
     const {refreshToken, accessToken} = req.cookies;
 
-    if(!refreshToken || accessToken){
+    if(!refreshToken || !accessToken){
         const error = {
             status : 401, 
             message : 'Unauthorized'

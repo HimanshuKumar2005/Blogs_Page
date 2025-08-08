@@ -24,17 +24,25 @@ function SubmitBlog() {
   };
 
   const submitHandler = async () => {
-    const data = {
-      author,
-      title,
-      content,
-      photo,
-    };
+    try {
+      const data = {
+        author,
+        title,
+        content,
+        photo,
+      };
 
-    const response = await submitBlog(data);
+      const response = await submitBlog(data);
 
-    if (response.status === 201) {
-      navigate("/");
+      if (response && response.status === 201) {
+        navigate("/");
+      } else {
+        console.error("Failed to submit blog:", response);
+        alert("Failed to submit blog. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting blog:", error);
+      alert("Error submitting blog. Please try again.");
     }
   };
 
